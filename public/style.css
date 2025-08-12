@@ -204,10 +204,10 @@ hr {
   height: 60%;
 }
 .main-slide {
-	margin: auto auto;
+  margin: auto auto;
   max-width: 576px;
-	width: 90%;
-	height: 95%;
+  width: 90%;
+  height: 95%;
   padding-top: 5px;
 }
 /* STATION ID */
@@ -228,18 +228,18 @@ hr {
   height: 10%;
 }
 .main-info-operatorLogos {
-	position: absolute;
-	width: 34%;
-	height: 35%;
-	left: 3%;
+  position: absolute;
+  width: 34%;
+  height: 35%;
+  left: 3%;
 }
 .main-info-links {
-	position: absolute;
-	bottom: -1%;
-	left: 3%;
-	height: 30%;
-	line-height: 1.2;
-	font-size: 16pt;
+  position: absolute;
+  bottom: -1%;
+  left: 3%;
+  height: 30%;
+  line-height: 1.2;
+  font-size: 16pt;
 }
 .dataSource {
   bottom: -2%;
@@ -250,11 +250,11 @@ hr {
   margin: 0 auto;
 }
 .main-info-hds1info {
-	position: absolute;
-	right: 9%;
-	bottom: 9%;
-	width: 24%;
-	height: 16%;
+  position: absolute;
+  right: 9%;
+  bottom: 9%;
+  width: 24%;
+  height: 16%;
 }
 .hdsLogo {
   height: 50%;
@@ -264,26 +264,26 @@ hr {
   position: absolute;
 }
 .main-info-netlogo-container {
-	position: absolute;
-	top: 39%;
-	left: 3%;
-	width: 37%;
-	height: 11%;
-	background-image: url(/images/meteoch.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+  position: absolute;
+  top: 39%;
+  left: 3%;
+  width: 37%;
+  height: 11%;
+  background-image: url(/images/meteoch.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main-info-sspwxrlogo-container {
-	position: absolute;
-	top: 12%;
-	right: -16.5%;
-	width: 100%;
-	height: 35%;
-	background-image: url(/images/sspwxr.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+  position: absolute;
+  top: 12%;
+  right: -16.5%;
+  width: 100%;
+  height: 35%;
+  background-image: url(/images/sspwxr.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 /*  CURRENT CONDITIONS  */
 .main-current-slide-container {
@@ -340,7 +340,7 @@ hr {
   text-align: center;
   width: 100%;
   font-size: 32pt;
-  font-weight: 300;
+  font-weight: 400;
 }
 .main-current-conditions-slotone {
   display: flex;
@@ -401,7 +401,7 @@ hr {
 .main-current-extraproducts {
   display: flex;
   justify-content: space-between;
-  font-weight: 300;
+  font-weight: 400;
   overflow: hidden;
 }
 .main-current-module1 {
@@ -460,9 +460,9 @@ hr {
   text-align: center;
   width: 100%;
   font-size: 32pt;
-  font-weight: 300;
+  font-weight: 400;
 }
-/* EXTENDED FORECAST */ 
+/* EXTENDED FORECAST */
 .main-forecast-slide-container {
   display: flex;
   justify-content: space-between;
@@ -528,12 +528,12 @@ hr {
 }
 /* RADAR */
 #radar {
-	z-index: -1;
-	width: 100%;
-	height: 100%;
-	max-width: 100% !important;
-	position: absolute;
-	top: -1%;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: 100% !important;
+  position: absolute;
+  top: -1%;
 }
 .main-current-radar-container {
   background-color: #000000;
@@ -576,19 +576,19 @@ hr {
   display: none;
 }
 .aqilabels {
-	font-weight: 400;
-	font-size: 14pt;
-	text-align: center;
+  font-weight: 400;
+  font-size: 14pt;
+  text-align: center;
 }
 .aqidata {
-	font-size: 14pt;
-	padding-left: 15px;
-	padding-right: 15px;
+  font-size: 14pt;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .aqicdata {
-	font-size: 18pt;
-  font-weight: 300;
-	text-align: center;
+  font-size: 18pt;
+  font-weight: 400;
+  text-align: center;
 }
 .main-aq-box {
   border-radius: var(--cornerRadius);
@@ -661,13 +661,13 @@ hr {
   background-repeat: no-repeat;
 }
 .main-alerts-standby-scrolltextcontainer {
-	position: relative;
-	white-space: nowrap;
-	width: 100%;
-	height: 5%;
-	left: 0%;
-	text-shadow: rgb(0, 0, 0) 1pt 1pt 1pt;
-	bottom: -64%;
+  position: relative;
+  white-space: nowrap;
+  width: 100%;
+  height: 5%;
+  left: 0%;
+  text-shadow: rgb(0, 0, 0) 1pt 1pt 1pt;
+  bottom: -64%;
   animation: slidein 2s cubic-bezier(0.65, 0, 0.35, 1) 1;
 }
 .main-alerts-standby-scrolltextdecorative {
@@ -718,7 +718,7 @@ hr {
   line-height: 1;
   overflow-x: hidden;
   left: 0%;
-  padding: 0 2%;
+  padding: 0 0.5%;
 }
 
 .ldl-presentation-slide {
@@ -729,7 +729,7 @@ hr {
 
 .ldl-icon {
   height: 100%;
-  margin-left: 5%;
+  margin-left: 3%;
   margin-right: 2%;
 }
 
@@ -768,12 +768,12 @@ hr {
 }
 
 .ldl-marquee {
-	width: 55%;
-	height: 100%;
+  width: 55%;
+  height: 100%;
   background-image: linear-gradient(to right, rgba(206, 212, 218, 0.2), rgba(201, 201, 201, 0.349));
-	border-radius: 4pt;
-	font-weight: 300;
-	overflow: hidden;
+  border-radius: 4pt;
+  font-weight: 400;
+  overflow: hidden;
   font-size: 10pt;
 }
 
@@ -797,7 +797,7 @@ hr {
   margin-right: 10px;
   text-wrap: nowrap;
   white-space: nowrap;
-  font-weight: 300;
+  font-weight: 400;
 }
 .ldltext-primarybutsmaller {
   font-size: 10pt;
@@ -805,11 +805,11 @@ hr {
   margin-right: 10px;
   text-wrap: nowrap;
   white-space: nowrap;
-  font-weight: 300;
+  font-weight: 400;
 }
 .ldltext-secondary {
   font-size: 12pt;
-  font-weight: 300;
+  font-weight: 400;
   align-self: center;
   margin-right: 5px;
 }
@@ -846,7 +846,7 @@ hr {
 }
 
 .ldl-netlogo {
-	width: 9.479166667%;
+  width: 9.479166667%;
   height: 100%;
   background-color: #333b4480;
   position: relative;
@@ -870,7 +870,7 @@ hr {
 
 #timeLDL {
   font-size: 12pt;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Roboto Condensed';
   height: 100%;
 }
@@ -879,51 +879,52 @@ hr {
   width: 100%;
   height: 40%;
   background-image: url(/images/meteoch.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* LDL CURRENT CONDITIONS */
 
 .ldl-current-cond-temp {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  width: auto;
+  width: fit-content;
+  margin-right: 5%;
 }
 
 #ldl-current-condition {
   align-self: center;
-  flex-grow: 2;
-  margin-left: 5%;
-  width: fit-content;
+  margin-left: 2.5%;
+  display: inline-flex;
   text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 #ldl-current-wind-label {
   font-size: 12pt;
-  font-weight: 300;
+  font-weight: 400;
 
 }
 
 #ldl-current-wind-value {
   font-size: 12pt;
-  font-weight: 300;
+  font-weight: 400;
   width: 100%;
   text-align: center;
+  white-space: nowrap;
 }
 
 .ldl-current-module {
-  display: flex;
+  display: inline-flex;
   justify-content: left;
-  margin-left: 5%;
+  margin-left: 0;
   line-height: 1;
   font-size: 12pt;
   width: auto;
-  flex: 1;
-  font-weight: 300;
+  font-weight: 400;
   align-self: center;
   margin-right: 5px;
 }
@@ -933,12 +934,13 @@ hr {
 }
 
 .ldl-current-module div, .ldl-current-wind {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
+  width: max-content;
 }
 
 .module-value {
-  font-weight: 300;
+  font-weight: 400;
   display: flex;
   align-self: center;
 }
@@ -976,7 +978,7 @@ hr {
 
 .ldl-day {
   position: relative;
-  display: flex;
+  display: inline-flex;
   width: 25%;
 }
 
@@ -994,98 +996,98 @@ hr {
 /* ANIMATIONS */
 @keyframes slideIn {
   0% {
-      transform: translateY(-100%);
+    transform: translateY(-100%);
   }
   100% {
-      transform: translateY(0%);
+    transform: translateY(0%);
   }
 }
 
 @keyframes slideOut {
   0% {
-      transform: translateY(0%);
+    transform: translateY(0%);
   }
   100% {
-      
-      transform: translateY(100%);
+
+    transform: translateY(100%);
   }
 }
 
 @keyframes slideOutUp {
   0% {
-      transform: translateY(0%);
+    transform: translateY(0%);
   }
   100% {
-      
-      transform: translateY(-125%);
+
+    transform: translateY(-125%);
   }
 }
 
 @keyframes slideInUp {
   0% {
-      transform: translateY(125%);
+    transform: translateY(125%);
   }
   100% {
-      
-      transform: translateY(0%);
+
+    transform: translateY(0%);
   }
 }
 
 @keyframes switchModules {
   0% {
-      transform: translateY(-125%);
+    transform: translateY(-125%);
   }
   100% {
-      transform: translateY(0%);
+    transform: translateY(0%);
   }
 }
 
 @keyframes fadeModule {
   0% {
-      opacity: 1;
+    opacity: 1;
   }
   100% {
-      opacity: 0;
+    opacity: 0;
   }
 }
 
 @keyframes progressBar {
   0% {
-      width: 0%;
+    width: 0%;
   }
   98% {
-      width: 100%;
-      opacity: 1;
+    width: 100%;
+    opacity: 1;
   }
   100% {
-      width: 100%;
-      opacity: 0;
+    width: 100%;
+    opacity: 0;
   }
 }
 @keyframes mainPresentationSlideIn {
   0% {
     transform: translateX(100%);
-}
+  }
   100% {
     transform: translateX(0%);
-}
+  }
 }
 
 @keyframes mainPresentationSlideOut {
   0% {
     transform: translateX(0%);
     opacity: 1;
-}
+  }
   100% {
     transform: translateY(-100%);
     opacity: 0;
-}
+  }
 }
 @keyframes ldlProgressBar {
   0% {
     width: 0%;
     opacity: 1;
-}
+  }
   98% {
     opacity: 1;
     width: 100%;
@@ -1093,17 +1095,17 @@ hr {
   100% {
     opacity: 0;
     width: 100%;
-}
+  }
 }
 @keyframes pop {
   0% {
-      transform: scale(0.95) rotate(340deg);
+    transform: scale(0.95) rotate(340deg);
   }
   50% {
-      transform: scale(1) rotate(340deg);
+    transform: scale(1) rotate(340deg);
   }
   100% {
-      transform: scale(0.95) rotate(340deg);
+    transform: scale(0.95) rotate(340deg);
   }
 }
 
@@ -1125,16 +1127,18 @@ hr {
 
 #ldl-location {
   order: -1 !important;
-  width: 15% !important;
+  width: auto;
   height: 100% !important;
+  display: inline-flex;
+  margin: 0 1.5%;
 }
 
 .ldl-bottomtext-container {
-  width: 100% !important;
+  width: fit-content;
 }
 
 .ldl-locationlabel-container {
-  width: 100% !important;
+  width: fit-content;
 }
 
 #ldl-location-label {
@@ -1146,26 +1150,26 @@ hr {
 }
 
 .ldl-weather {
-	position: fixed;
-	width: 100%;
-	height: 9.156%;
-	margin: auto auto;
-	color: var(--textColour2);
-	bottom: 0%;
-	background: var(--mainGradient);
-	backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  height: 9.156%;
+  margin: auto auto;
+  color: var(--textColour2);
+  bottom: 0%;
+  background: var(--mainGradient);
+  backdrop-filter: blur(10px);
 }
 .ldl-container {
-	background: transparent;
-	border-radius: 0;
-	position: absolute !important;
-	backdrop-filter: none !important;
-	height: 5.740740741% !important;
-	left: 2.083333333% !important;
-	width: 95.83333333% !important;
-	margin: 0 !important;
-	height: 60% !important;
-	flex-direction: row;
+  background: transparent;
+  border-radius: 0;
+  position: absolute !important;
+  backdrop-filter: none !important;
+  height: 5.740740741% !important;
+  left: 2.083333333% !important;
+  width: 95.83333333% !important;
+  margin: 0 !important;
+  height: 60% !important;
+  flex-direction: row;
 }
 
 #ldl-divider {
@@ -1183,7 +1187,7 @@ hr {
 
 #cc-label {
   font-size: 12pt !important;
-  font-weight: 300;
+  font-weight: 400;
   color: #ffffff80;
 }
 
@@ -1192,13 +1196,13 @@ hr {
 }
 
 sb {
-  font-weight: 300;
+  font-weight: 400;
   /*margin-left: 4px;*/
   color: #57B5D9;
 }
 
 #ldl-forecast-day0-temp, #ldl-forecast-day1-temp {
-  margin-left: 12px;  
+  margin-left: 12px;
   color: #57B5D9;
 }
 
@@ -1222,7 +1226,7 @@ sb {
   display: flex;
   flex-direction: row;
   justify-content: left;
-  margin-left: 5%;
+  margin-left: 3%;
 }
 
 .ldl-extended-container {

@@ -29,11 +29,7 @@ async function LDLData() {
   
       function processnextLDLLocation() {
 
-        if (config.staticIcons === true) {
-            iconDir = "static"
-        } else {
-            iconDir = "animated"
-        }
+        iconDir = "twc"
   
         if (locationsList.units == "e") {
           endingTemp = "°F"
@@ -93,13 +89,7 @@ async function LDLData() {
                 currentTemp.innerHTML = `${latestData.current.temperature}°`
                 currentCondition.innerHTML = latestData.current.wxPhraseLong
                 currentWind.innerHTML = `Wind ${latestData.current.windDirectionCardinal} ${latestData.current.windSpeed}${endingWind}`
-    
-                if (latestData.current.windGust === null) {
-                  currentGusts.innerHTML = `Gusts None`
-                } else {
-                  currentGusts.innerHTML = `Gusts ${latestData.current.windGust}${endingWind}`
-                }
-
+                currentGusts.innerHTML = `Gusts ${latestData.current.windGust}${endingWind}`
                 currentHumidity.innerHTML = `Humidity ${latestData.current.relativeHumidity}%`
                 /* currentDewpoint.innerHTML = ` Dew Point ${latestData.current.temperatureDewPoint}${endingTemp}`
                 currentPressure.innerHTML = `Pressure ${latestData.current.pressureAltimeter}${endingPressure}` */
@@ -171,42 +161,42 @@ async function LDLData() {
 
               function appendHourly() {
                 const hourly0Name = document.getElementById('ldl-hourly-day0-name');
-                const hourly0Icon = document.getElementById('ldl-day0-icon');
+                const hourly0Icon = document.getElementById('ldl-hourly-day0-icon');
                 const hourly0Temp = document.getElementById('ldl-hourly-day0-temp');
                 const hourly1Name = document.getElementById('ldl-hourly-day1-name');
-                const hourly1Icon = document.getElementById('ldl-day1-icon');
+                const hourly1Icon = document.getElementById('ldl-hourly-day1-icon');
                 const hourly1Temp = document.getElementById('ldl-hourly-day1-temp');
                 const hourly2Name = document.getElementById('ldl-hourly-day2-name');
-                const hourly2Icon = document.getElementById('ldl-day2-icon');
+                const hourly2Icon = document.getElementById('ldl-hourly-day2-icon');
                 const hourly2Temp = document.getElementById('ldl-hourly-day2-temp');
                 const hourly3Name = document.getElementById('ldl-hourly-day3-name');
-                const hourly3Icon = document.getElementById('ldl-day3-icon');
+                const hourly3Icon = document.getElementById('ldl-hourly-day3-icon');
                 const hourly3Temp = document.getElementById('ldl-hourly-day3-temp');
 
                 const hourly4Name = document.getElementById('ldl-hourly-day4-name');
-                const hourly4Icon = document.getElementById('ldl-day4-icon');
+                const hourly4Icon = document.getElementById('ldl-hourly-day4-icon');
                 const hourly4Temp = document.getElementById('ldl-hourly-day4-temp');
                 const hourly5Name = document.getElementById('ldl-hourly-day5-name');
-                const hourly5Icon = document.getElementById('ldl-day5-icon');
+                const hourly5Icon = document.getElementById('ldl-hourly-day5-icon');
                 const hourly5Temp = document.getElementById('ldl-hourly-day5-temp');
                 const hourly6Name = document.getElementById('ldl-hourly-day6-name');
-                const hourly6Icon = document.getElementById('ldl-day6-icon');
+                const hourly6Icon = document.getElementById('ldl-hourly-day6-icon');
                 const hourly6Temp = document.getElementById('ldl-hourly-day6-temp');
                 const hourly7Name = document.getElementById('ldl-hourly-day7-name');
-                const hourly7Icon = document.getElementById('ldl-day7-icon');
+                const hourly7Icon = document.getElementById('ldl-hourly-day7-icon');
                 const hourly7Temp = document.getElementById('ldl-hourly-day7-temp');
                 
                 const hourly8Name = document.getElementById('ldl-hourly-day8-name');
-                const hourly8Icon = document.getElementById('ldl-day8-icon');
+                const hourly8Icon = document.getElementById('ldl-hourly-day8-icon');
                 const hourly8Temp = document.getElementById('ldl-hourly-day8-temp');
                 const hourly9Name = document.getElementById('ldl-hourly-day9-name');
-                const hourly9Icon = document.getElementById('ldl-day9-icon');
+                const hourly9Icon = document.getElementById('ldl-hourly-day9-icon');
                 const hourly9Temp = document.getElementById('ldl-hourly-day9-temp');
                 const hourlyAName = document.getElementById('ldl-hourly-dayA-name');
-                const hourlyAIcon = document.getElementById('ldl-dayA-icon');
+                const hourlyAIcon = document.getElementById('ldl-hourly-dayA-icon');
                 const hourlyATemp = document.getElementById('ldl-hourly-dayA-temp');
                 const hourlyBName = document.getElementById('ldl-hourly-dayB-name');
-                const hourlyBIcon = document.getElementById('ldl-dayB-icon');
+                const hourlyBIcon = document.getElementById('ldl-hourly-dayB-icon');
                 const hourlyBTemp = document.getElementById('ldl-hourly-dayB-temp');
     
                 const now = new Date();
@@ -261,16 +251,16 @@ async function LDLData() {
 
               function appendExtended() {
                 const extended0Name = document.getElementById('ldl-extended-day0-name');
-                const extended0Icon = document.getElementById('ldl-day0-icon');
+                const extended0Icon = document.getElementById('ldl-extended-day0-icon');
                 const extended0Temp = document.getElementById('ldl-extended-day0-temp');
                 const extended1Name = document.getElementById('ldl-extended-day1-name');
-                const extended1Icon = document.getElementById('ldl-day1-icon');
+                const extended1Icon = document.getElementById('ldl-extended-day1-icon');
                 const extended1Temp = document.getElementById('ldl-extended-day1-temp');
                 const extended2Name = document.getElementById('ldl-extended-day2-name');
-                const extended2Icon = document.getElementById('ldl-day2-icon');
+                const extended2Icon = document.getElementById('ldl-extended-day2-icon');
                 const extended2Temp = document.getElementById('ldl-extended-day2-temp');
                 const extended3Name = document.getElementById('ldl-extended-day3-name');
-                const extended3Icon = document.getElementById('ldl-day3-icon');
+                const extended3Icon = document.getElementById('ldl-extended-day3-icon');
                 const extended3Temp = document.getElementById('ldl-extended-day3-temp');
 
                 const now = new Date();
