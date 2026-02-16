@@ -1,11 +1,185 @@
-// Adding functionality to embed an external site as the wallpaper
-const wallpaperElement = document.querySelector('.wallpaper');
+import { config } from "./config.js";
+import { backgroundCycle } from './weather.js';
 
-if (wallpaperElement) {
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://exerny1.github.io/intellistar-emulator-24-7/';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = 'none';
-    wallpaperElement.appendChild(iframe);
+const viewport = document.getElementsByClassName("view")[0];
+const mainSlides = document.getElementsByClassName("main-slides")[0];
+const wallpaper = document.getElementsByClassName("wallpaper")[0];
+const topBar = document.getElementsByClassName("topbar")[0];
+const ldl = document.getElementsByClassName("ldl-presentation")[0];
+const ldlContainer = document.getElementsByClassName("ldl-weather")[0];
+const ldlBranding = document.getElementsByClassName("ldl-netlogo")[0];
+const ldlLineThing = document.getElementById('ldl-divider');
+const date = document.getElementById("date");
+const time = document.getElementById("time");
+const dateLDL = document.getElementById("dateLDL");
+const timeLDL = document.getElementById("timeLDL");
+
+function ScaleViewportToTheWindowIGuessLmao() {
+
+    const containerWidth = window.innerWidth;
+    const containerHeight = window.innerHeight;
+
+    let width
+    let height
+
+    if (config.videoType === 0) { // 4:3 aspect ratio
+        width = 640
+        height = 480
+
+        viewport.style.width = `640px`
+    } else if (config.videoType === 1) { // 16:9 aspect ratio
+        width = 854
+        height = 480
+
+        viewport.style.width = `854px`
+    }
+    
+    const scaleRatioWidth = containerWidth / width;
+    const scaleRatioHeight = containerHeight / height;
+
+    const scaleRatio = Math.min(scaleRatioWidth, scaleRatioHeight);
+
+    viewport.style.transformOrigin = `top left`;
+
+    const centeredLeft = (containerWidth - viewport.offsetWidth * scaleRatio) / 2;
+    const centeredTop = (containerHeight - viewport.offsetHeight * scaleRatio) / 2;
+
+    viewport.style.left = `${centeredLeft}px`;
+    viewport.style.top = `${centeredTop}px`;
+
+    viewport.style.transform = `scale(${scaleRatio})`;
+}
+
+window.addEventListener('resize', ScaleViewportToTheWindowIGuessLmao);
+
+function clock() { // partially copied from weatherHDS 2
+    const now = new Date();
+    const utcDate = new Date(now.toUTCString());
+    const timezone = config.systemTimeZone
+
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    const dayOfWeek = days[now.getDay()];
+    const month = months[now.getMonth()];
+    const dayOfMonth = now.getDate();
+    const year = now.getFullYear();
+
+    const options = {
+        timeZone: timezone,
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+    };
+
+    const dateFormatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedDate = dateFormatter.format(utcDate);
+
+    date.innerText = `${dayOfWeek} ${month} ${dayOfMonth} ${year}`;
+    time.innerText = formattedDate;
+
+    dateLDL.innerText = `${dayOfWeek} ${month} ${dayOfMonth} ${year}`;
+    timeLDL.innerText = formattedDate.slice(0,(formattedDate.length - 3));
+}
+
+setInterval(clock, 1000)
+
+function presentationType() {
+    if (config.presentationType === 0) { // runs all presentations
+        console.log(`Running main presentation. Presentation ID: ${config.presentationType}`)
+        ldl.style.width = `90%`
+        ldlBranding.style.display = `flex`
+    }
+    if (config.presentationType === 1) { // ldl only presentation, and make LDL thinner
+        console.log(`Running LDL-only presentation. Presentation ID: ${config.presentationType}`)
+
+        // Injecting the External Site into the Wallpaper
+        wallpaper.innerHTML = `<iframe src="https://exerny1.github.io/intellistar-emulator-24-7/" style="width:100%; height:100%; border:none; position:absolute; top:0; left:0; z-index:-1;"></iframe>`;
+        wallpaper.style.display = `block` // Ensure it is visible
+        
+        mainSlides.style.display = `none`
+        topBar.style.display = `none`
+
+        ldl.style.width = `75%`
+        ldlBranding.style.display = `flex`
+
+    }
+    if (config.presentationType === 2) { // no LDL mode
+        ldlContainer.style.display = `none`;
+    }
+    if (config.ldlClock === false) {
+        timeLDL.style.display = `none`
+        dateLDL.style.display = `none`
+    }
+    if (config.transparentLDL === 1) { // make ldl transparent
+        ldlContainer.style.backgroundColor = `rgba(0,0,0,0)`
+        ldlContainer.style.backgroundImage = `none` // Force-remove background image
+    }
+    if (config.transparentLDL === 2) { // make ldl transparent, and remove the white line at the top
+        ldlContainer.style.backgroundColor = `rgba(0,0,0,0)`
+        ldlContainer.style.backgroundImage = `none`
+        ldlLineThing.remove()
+    }
+    if (config.transparentLDL === 3) { // like option one, but with text shadow
+        ldlContainer.style.backgroundColor = `rgba(0,0,0,0)`
+        ldlContainer.style.backgroundImage = `none`
+        ldlContainer.style.textShadow = `black 1.1px 1.5px 3px;`
+    }
+    if (config.transparentLDL === 4) { // like option two, but with text shadow
+        ldlContainer.style.backgroundColor = `rgba(0,0,0,0)`
+        ldlContainer.style.backgroundImage = `none`
+        ldlContainer.style.textShadow = `black 1.1px 1.5px 3px;`
+        ldlLineThing.remove()
+    }
+}
+
+const mainTheme = document.querySelector(':root')
+
+function imageRendering() {
+    if (config.textureFiltering === true) { // smoothes images when scaled
+        mainTheme.style.imageRendering = `auto`
+    }
+    if (config.textureFiltering === false) { // pixelates images when scaled
+        mainTheme.style.imageRendering = `pixelated`
+    }
+}
+
+function scrollTicker() {
+    if (config.tickerContent === "") {
+        document.getElementsByClassName('ldl-marquee')[0].style.display = `none`
+    } else {
+        
+        document.getElementById('marquee-ticker').innerHTML = config.tickerContent
+
+        $(document).ready(function(){
+            $('#marquee-ticker').marquee({
+                duration: 9000,
+                gap: 360,
+                delayBeforeStart: 0,
+                direction: 'left',
+                duplicated: true, 
+                pauseOnHover: true,
+            })
+        })
+
+    }
+
+}
+
+export function everythingConfigLmao() {
+    imageRendering()
+    ScaleViewportToTheWindowIGuessLmao()
+    presentationType()
+    scrollTicker()
+
+    switch (config.enableBackgrounds) {
+        case false:
+            break;
+        default:
+            backgroundCycle()
+            setInterval(() => {
+                backgroundCycle()
+            }, 300000);
+            break;
+    }
 }
