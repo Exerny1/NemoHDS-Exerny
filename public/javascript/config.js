@@ -14,7 +14,7 @@ export let config = {
     "textureFiltering": true,
     "systemTimeZone": "America/New_York",
     "tickerContent": "",
-    "overrideBackgroundImage": true,
+    "overrideBackgroundImage": false,
     "enableBackgrounds": true,
 }
 
