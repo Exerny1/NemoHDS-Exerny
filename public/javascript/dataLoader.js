@@ -1,5 +1,5 @@
 export let data;
-export let ldlData
+export let ldlData;
 export let imageIndex;
 export let locationsList;
 
@@ -9,59 +9,94 @@ import { everythingConfigLmao } from "./main.js";
 import { config } from "./config.js";
 
 async function fetchData() {
+  // Reset data to prevent using old or "undefined" states
   data = null;
   ldlData = null;
-  imageIndex = null;
 
-  const [response, ldlResponse] = await Promise.all([
-    fetch('./wxData.json'),
-    fetch('./ldlData.json'),
-  ]);
+  try {
+    const [response, ldlResponse] = await Promise.all([
+      fetch('./wxData.json'),
+      fetch('./ldlData.json'),
+    ]);
 
-  data = await response.json();
-  ldlData = await ldlResponse.json();
+    if (!response.ok || !ldlResponse.ok) {
+      throw new Error("One or more JSON files failed to load from the server.");
+    }
 
-  console.log(`[dataLoader.js] Loaded the following data files:`, data, ldlData)
-  console.log(`[dataLoader.js] Loaded the background image index:`, imageIndex)
+    const rawData = await response.json();
+    const rawLdlData = await ldlResponse.json();
+
+    // --- DATA MAPPING FIX ---
+    // Visual Crossing via server.js nests data under the city name.
+    // We "pull it out" here so weather.js sees a clean object.
+    const cityName = "Manassas, VA"; 
+
+    if (rawData[cityName]) {
+      data = rawData[cityName][0]; 
+      // This ensures 'data.current' exists if the app looks for it
+      if (!data.current && data.currentConditions) {
+        data.current = data.currentConditions;
+      }
+    } else {
+      data = rawData; // Fallback if structure changes
+    }
+
+    if (rawLdlData[cityName]) {
+      ldlData = rawLdlData[cityName][0];
+    } else {
+      ldlData = rawLdlData;
+    }
+
+    console.log(`[dataLoader.js] Mapped Data for ${cityName}:`, data);
+  } catch (error) {
+    console.error(`[dataLoader.js] Critical Error:`, error.message);
+  }
 }
-
-fetchData()
 
 async function fetchLocationsList() {
   locationsList = null;
-
-  const [locationsResponse] = await Promise.all([
-    fetch('/locations')
-  ])
-
-  locationsList = await locationsResponse.json();
+  try {
+    const response = await fetch('/locations');
+    locationsList = await response.json();
+  } catch (e) {
+    console.warn("Could not fetch locations list.");
+  }
 }
 
 async function fetchBackgroundsIndex() {
   imageIndex = null;
-
-  const [imageIndexResponse] = await Promise.all([
-    fetch('./imageIndex.json')
-  ])
-
-  imageIndex = await imageIndexResponse.json();
+  try {
+    const response = await fetch('./imageIndex.json');
+    imageIndex = await response.json();
+  } catch (e) {
+    console.warn("Could not fetch image index.");
+  }
 }
-
-fetchLocationsList()
-fetchBackgroundsIndex()
 
 async function runInitialProcesses() {
-  await fetchData()
+  // 1. Fetch all data first
+  await Promise.all([
+    fetchData(),
+    fetchLocationsList(),
+    fetchBackgroundsIndex()
+  ]);
   
-  if (config.presentationType != 1) {
-    getInitialData()
+  // 2. Trigger the dependent scripts once data is ready
+  if (data && ldlData) {
+    if (config.presentationType != 1) {
+      getInitialData();
+    }
+    if (config.presentationType != 2) {
+      runInitialLDL();
+    }
+    everythingConfigLmao();
+  } else {
+    console.error("Scripts did not run because 'data' is still null.");
   }
-  if (config.presentationType != 2) {
-    runInitialLDL()
-  }
-  everythingConfigLmao()
 }
 
-setInterval(fetchData, 1500000)
+// Refresh every 25 minutes (1500000ms)
+setInterval(fetchData, 1500000);
 
-runInitialProcesses()
+// Kick off the load process
+runInitialProcesses();
