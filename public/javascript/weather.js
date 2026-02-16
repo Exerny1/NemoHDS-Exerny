@@ -42,8 +42,6 @@ async function mainData() {
 
             if (locationsList.units == "e") {
                 endingTemp = "°F"
-                endingWind = "mph"
-                endingDistance = "mi"
                 endingMeasurement = "in"
                 endingCeiling= "ft"
                 endingPressure = "hg"
