@@ -3,7 +3,7 @@ export let config = {
     "affiliateName": "Spark TV",
     "channelNumber": "1004",
     "debugger": false,
-    "videoBackgrounds": true,
+    "videoBackgrounds": false,
     "currentConditionsGradient": true,
     "staticIcons": false,
     "transparentLDL": 0,
@@ -15,7 +15,7 @@ export let config = {
     "systemTimeZone": "America/New_York",
     "tickerContent": "",
     "overrideBackgroundImage": "images/i2xdbg.png",
-    "enableBackgrounds": false,
+    "enableBackgrounds": true,
 }
 
 export const weatherIcons = {
