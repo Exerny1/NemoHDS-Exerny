@@ -9,7 +9,6 @@ import { everythingConfigLmao } from "./main.js";
 import { config } from "./config.js";
 
 async function fetchData() {
-  // Reset data to prevent using old or "undefined" states
   data = null;
   ldlData = null;
 
@@ -26,33 +25,37 @@ async function fetchData() {
     const rawData = await response.json();
     const rawLdlData = await ldlResponse.json();
 
-    // --- DATA MAPPING FIX ---
-    // Visual Crossing via server.js nests data under the city name.
+    // Set your specific city name here
     const cityName = "Manassas, VA"; 
 
     if (rawData[cityName]) {
-      // Access the first entry in the array for the city
       data = rawData[cityName][0]; 
       
-      // Ensure 'data.current' exists if the app looks for it
+      // Map currentConditions to 'current' for the emulator's logic
       if (!data.current && data.currentConditions) {
         data.current = data.currentConditions;
       }
 
-      // --- THE "UNDEFINED" FIX ---
-      // We manually map Visual Crossing's lowercase keys to the CamelCase keys 
-      // typically used by IntelliStar-style weather emulators.
+      // --- FIX FOR "UNDEFINED" AND DECIMAL NUMBERS ---
       if (data.current) {
-        data.current.windSpeed = data.current.windspeed;
-        data.current.feelsLike = data.current.feelslike;
-        data.current.wind = data.current.windspeed; // Common fallback
+        // 1. Map lowercase Visual Crossing keys to emulator's CamelCase keys
+        // 2. Use Math.round() to change "40.4" to "40" for a cleaner look
+        data.current.windSpeed = Math.round(data.current.windspeed || 0);
+        data.current.windGust = Math.round(data.current.windgust || 0);
+        data.current.feelsLike = Math.round(data.current.feelslike || data.current.temp);
         
-        // Optional: Ensure wind direction is mapped if needed
+        // 3. Fix the "undefined" unit strings
+        // This attaches the text the display script is looking for
+        data.current.windUnits = "MPH"; 
+        data.current.gustUnits = "MPH";
+        data.current.temperatureUnits = "F"; 
+        
+        // 4. Map Wind Direction (Optional but recommended)
         data.current.windDir = data.current.winddir;
       }
 
     } else {
-      data = rawData; // Fallback if structure is flat
+      data = rawData; 
     }
 
     if (rawLdlData[cityName]) {
@@ -61,7 +64,7 @@ async function fetchData() {
       ldlData = rawLdlData;
     }
 
-    console.log(`[dataLoader.js] Mapped Data for ${cityName}:`, data);
+    console.log(`[dataLoader.js] Mapped & Cleaned Data:`, data);
   } catch (error) {
     console.error(`[dataLoader.js] Critical Error:`, error.message);
   }
@@ -88,14 +91,12 @@ async function fetchBackgroundsIndex() {
 }
 
 async function runInitialProcesses() {
-  // 1. Fetch all data first
   await Promise.all([
     fetchData(),
     fetchLocationsList(),
     fetchBackgroundsIndex()
   ]);
   
-  // 2. Trigger the dependent scripts once data is ready
   if (data && ldlData) {
     if (config.presentationType != 1) {
       getInitialData();
@@ -109,8 +110,5 @@ async function runInitialProcesses() {
   }
 }
 
-// Refresh every 25 minutes (1500000ms)
-setInterval(fetchData, 1500000);
-
-// Kick off the load process
+setInterval(fetchData, 1500000); // 25 min refresh
 runInitialProcesses();
