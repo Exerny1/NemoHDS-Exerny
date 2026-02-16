@@ -29,7 +29,7 @@ async function LDLData() {
   
       function processnextLDLLocation() {
 
-        iconDir = "twc"
+       iconDir = "twc"
   
         if (locationsList.units == "e") {
           endingTemp = "°F"
@@ -49,8 +49,6 @@ async function LDLData() {
             endingPressure = "mb"
             endingSnow = "cm"
             endingRain = "mm"
-        }
-  
         if (ldlLocationIndex < locationsList.locationIndex.ldlLocations.length) {
           
           const locationName = locationsList.locationIndex.ldlLocations[ldlLocationIndex];
