@@ -14,7 +14,7 @@ export let config = {
     "textureFiltering": true,
     "systemTimeZone": "America/New_York",
     "tickerContent": "",
-    "overrideBackgroundImage": url("/images/i2xdbg.png"),
+    "overrideBackgroundImage": true,
     "enableBackgrounds": true,
 }
 
