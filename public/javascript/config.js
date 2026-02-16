@@ -6,7 +6,7 @@ export let config = {
     "videoBackgrounds": false,
     "currentConditionsGradient": true,
     "staticIcons": false,
-    "transparentLDL": true,
+    "transparentLDL": 1,
     "ldlClock": true,
     "presentationType": 1,
     "videoType": 2,
