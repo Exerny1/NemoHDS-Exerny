@@ -3,7 +3,7 @@ export let config = {
     "affiliateName": "Spark TV",
     "channelNumber": "1004",
     "debugger": false,
-    "videoBackgrounds": false,
+    "videoBackgrounds": true,
     "currentConditionsGradient": true,
     "staticIcons": false,
     "transparentLDL": 0,
