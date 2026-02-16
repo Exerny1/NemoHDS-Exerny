@@ -9,7 +9,7 @@ export let config = {
     "transparentLDL": 0,
     "ldlClock": true,
     "presentationType": 0,
-    "videoType": 2,
+    "videoType": 1,
     "farenheightInMetricUnits": true, // Force the use of farenheight for temperature whenever metric units are used (coming soon)
     "textureFiltering": true,
     "systemTimeZone": "America/New_York",
