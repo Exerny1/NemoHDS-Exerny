@@ -28,17 +28,31 @@ async function fetchData() {
 
     // --- DATA MAPPING FIX ---
     // Visual Crossing via server.js nests data under the city name.
-    // We "pull it out" here so weather.js sees a clean object.
     const cityName = "Manassas, VA"; 
 
     if (rawData[cityName]) {
+      // Access the first entry in the array for the city
       data = rawData[cityName][0]; 
-      // This ensures 'data.current' exists if the app looks for it
+      
+      // Ensure 'data.current' exists if the app looks for it
       if (!data.current && data.currentConditions) {
         data.current = data.currentConditions;
       }
+
+      // --- THE "UNDEFINED" FIX ---
+      // We manually map Visual Crossing's lowercase keys to the CamelCase keys 
+      // typically used by IntelliStar-style weather emulators.
+      if (data.current) {
+        data.current.windSpeed = data.current.windspeed;
+        data.current.feelsLike = data.current.feelslike;
+        data.current.wind = data.current.windspeed; // Common fallback
+        
+        // Optional: Ensure wind direction is mapped if needed
+        data.current.windDir = data.current.winddir;
+      }
+
     } else {
-      data = rawData; // Fallback if structure changes
+      data = rawData; // Fallback if structure is flat
     }
 
     if (rawLdlData[cityName]) {
