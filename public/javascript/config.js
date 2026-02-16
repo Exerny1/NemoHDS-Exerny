@@ -8,7 +8,7 @@ export let config = {
     "staticIcons": false,
     "transparentLDL": 0,
     "ldlClock": true,
-    "presentationType": 2,
+    "presentationType": 1,
     "videoType": 1,
     "farenheightInMetricUnits": true, // Force the use of farenheight for temperature whenever metric units are used (coming soon)
     "textureFiltering": true,
