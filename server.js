@@ -4,126 +4,98 @@ const fs = require('fs').promises;
 const app = express();
 
 const serverConfig = {
-  // Your Visual Crossing API Key
   "vcApiKey": "DEZCY7LHJU97WM87WHLNCMV8L", 
-  "units": "us", // Visual Crossing uses 'us', 'metric', or 'uk'
-
+  "units": "us", 
   "webPort": 9001,
-
   "locationIndex": {
-    "locations": [
-      "Manassas, VA" // Main location set to Manassas
-    ],
-    "ldlLocations": [ 
-      "Manassas, VA" // LDL locations set to Manassas
-    ],
+    "locations": ["Manassas, VA"],
+    "ldlLocations": ["Manassas, VA"]
   }
-}
+};
 
 let allWeather = {};
 let ldlWeather = {};
 
-/**
- * Fetches comprehensive weather data from Visual Crossing
- * One call retrieves current, hourly, and daily forecasts.
- */
+// CORE FETCH FUNCTION
 async function getVCWeather(location) {
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=${serverConfig.units}&key=${serverConfig.vcApiKey}&contentType=json`;
+  // We add 'include' parameters to ensure 'currentConditions' isn't undefined
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=${serverConfig.units}&key=${serverConfig.vcApiKey}&contentType=json&include=current,hours,days,alerts`;
   
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
     const data = await response.json();
+
+    // Safety check: if currentConditions is missing, create a placeholder
+    if (!data.currentConditions) {
+      console.warn(`Warning: No current conditions for ${location}`);
+      data.currentConditions = { temp: "N/A", conditions: "Data Unavailable" };
+    }
     return data;
   } catch (error) {
-    console.error(`[Error] Failed to fetch data for ${location}:`, error.message);
+    console.error(`Fetch failed for ${location}:`, error.message);
     return null;
   }
 }
 
-async function loadAllCities() {
-  for (const location of serverConfig.locationIndex.locations) {
-    const data = await getVCWeather(location);
+async function updateData() {
+  console.log(`[${new Date().toLocaleTimeString()}] Refreshing weather...`);
+  
+  for (const loc of serverConfig.locationIndex.locations) {
+    const data = await getVCWeather(loc);
     if (data) {
-      allWeather[location] = {
+      allWeather[loc] = {
         0: {
-          coordinates: { lat: data.latitude, lon: data.longitude },
           current: data.currentConditions,
           weekly: data.days,
           alerts: data.alerts || [],
-          // Visual Crossing returns hourly inside the daily 'days' array
-          hourly: data.days[0].hours 
+          coordinates: { lat: data.latitude, lon: data.longitude }
         }
       };
-      console.log(`Processed Main: ${location}`);
     }
   }
-}
 
-async function loadAllLDLCities() {
-  for (const location of serverConfig.locationIndex.ldlLocations) {
-    const data = await getVCWeather(location);
+  for (const loc of serverConfig.locationIndex.ldlLocations) {
+    const data = await getVCWeather(loc);
     if (data) {
-      ldlWeather[location] = {
+      ldlWeather[loc] = {
         0: {
-          coordinates: { lat: data.latitude, lon: data.longitude },
           current: data.currentConditions,
-          alerts: data.alerts || [],
-          hourly: data.days[0].hours,
           forecast: data.days,
-          aqi: null, // Basic VC API doesn't include AQI in the same call
-          almanac: null 
+          hourly: data.days[0].hours,
+          alerts: data.alerts || []
         }
       };
-      console.log(`Processed LDL: ${location}`);
     }
   }
-}
 
-async function saveDataToJson() {
-  const publicDir = path.join(__dirname, 'public');
-  const jsonFile = path.join(publicDir, 'wxData.json');
-  const ldlFile = path.join(publicDir, 'ldlData.json');
-
+  // Save to JSON files in /public
   try {
-    // Ensure the public directory exists
-    await fs.mkdir(publicDir, { recursive: true });
-    
-    await fs.writeFile(jsonFile, JSON.stringify(allWeather, null, 2));
-    await fs.writeFile(ldlFile, JSON.stringify(ldlWeather, null, 2));
-    console.log("JSON files saved to /public");
+    const publicPath = path.join(__dirname, 'public');
+    await fs.mkdir(publicPath, { recursive: true });
+    await fs.writeFile(path.join(publicPath, 'wxData.json'), JSON.stringify(allWeather, null, 2));
+    await fs.writeFile(path.join(publicPath, 'ldlData.json'), JSON.stringify(ldlWeather, null, 2));
+    console.log("Success: wxData.json and ldlData.json updated.");
   } catch (err) {
-    console.error("Error saving JSON:", err);
+    console.error("File Save Error:", err.message);
   }
 }
 
-async function runDataInterval() {
-  console.log(`--- Starting Update Cycle: ${new Date().toLocaleTimeString()} ---`);
-  await loadAllCities();
-  await loadAllLDLCities();
-  await saveDataToJson();
-  console.log(`NemoHDS is running on http://localhost:${serverConfig.webPort}`);
-  console.log(`Ctrl + C to quit`);
-}
+// Start the loop
+updateData();
+setInterval(updateData, 480000); // 8 minutes
 
-// Initial Run
-runDataInterval();
-
-// Set interval (8 minutes)
-setInterval(runDataInterval, 480000);
-
-// Server Setup
+// EXPRESS SERVER SETUP
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/locations', (req, res) => {
-  res.json({
-    locationIndex: serverConfig.locationIndex,
-    units: serverConfig.units
-  });
+  res.json({ locationIndex: serverConfig.locationIndex, units: serverConfig.units });
 });
 
-app.listen(serverConfig.webPort, () => {});
-
-process.on('SIGINT', () => { console.log("Exiting..."); process.exit(); });
+// Use dynamic port for Glitch/Render or 9001 for Termux
+const PORT = process.env.PORT || serverConfig.webPort;
+app.listen(PORT, () => {
+  console.log(`\n--- SERVER LIVE ---`);
+  console.log(`URL: http://localhost:${PORT}`);
+  console.log(`Status: Fetching for Manassas, VA`);
+});
