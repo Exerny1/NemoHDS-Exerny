@@ -15,7 +15,6 @@ export let config = {
     "systemTimeZone": "America/New_York",
     "tickerContent": "",
     "overrideBackgroundImage": "images/i2xdbg.png",
-",
     "enableBackgrounds": false,
 }
 
