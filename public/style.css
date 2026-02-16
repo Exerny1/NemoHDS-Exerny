@@ -49,7 +49,7 @@ body {
   display: none;
 }
 #forecast-extended {
-  display: none;
+  display: flex; !important!
 }
 #\37 day-graph {
   display: none;
