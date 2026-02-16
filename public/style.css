@@ -1,15 +1,8 @@
-/* Updated Background for body and wallpaper */
-
 body {
-  margin: 0 0;
-  background-color: #ffcc00; /* A new yellow background */
+    background-color: #001021;
 }
 
 .wallpaper {
-  position: static;
-  z-index: auto;
-  background: #ffcc00; /* Match the body background */
-  background-size: cover;
-  background-position: center;
-  filter: none;
+    /* Keep original styles */
+    /* Add here if needed */
 }
