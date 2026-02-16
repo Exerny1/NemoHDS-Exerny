@@ -16,38 +16,12 @@
   --mainGradient: linear-gradient(var(--primaryColour), var(--secondaryColour));
   --secondGradient: linear-gradient(var(--fifthColour), var(--fourthColour));
   --thirdGradient: linear-gradient(var(--sixthColour), var(--seventhColour));
-  --mainSlideGradient: var(--secondGradient);
-  
-  /* The color from your image */
-  --bgMidnight: #001021; 
+  --mainSlideGradient: var(--
 }
 
-/* Background setup */
-body, html {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bgMidnight);
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
-.view {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-  background-color: var(--bgMidnight);
-  overflow: hidden;
-}
-
-/* Removed iframe styling since we are using a solid color now */
-#emulator-bg {
-  display: none;
-}
-
-/* Hide the old wallpaper */
-.wallpaper {
-  display: none !important;
+body {
+  margin: 0 0;
+  background-color:#001021;
 }
 
 /* LOADING SCREEN */
