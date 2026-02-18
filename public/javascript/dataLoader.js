@@ -8,7 +8,15 @@ import { runInitialLDL } from "./ldl.js";
 import { everythingConfigLmao } from "./main.js";
 import { config } from "./config.js";
 
-// Helper function to turn degrees into "NW", "S", etc.
+// --- LOCATION ROTATION SETUP ---
+const cities = [
+  "Manassas, VA",
+  "Manassas Park, VA",
+  "Buckhall, VA",
+  "Fairfax, VA"
+];
+let cityIndex = 0;
+
 function getWindDirection(deg) {
   const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
   const index = Math.round(deg / 22.5) % 16;
@@ -31,9 +39,12 @@ async function fetchData() {
 
     const rawData = await response.json();
     const rawLdlData = await ldlResponse.json();
-    const cityName = "Manassas, VA"; 
+    
+    // Pick the current city from our list
+    const cityName = cities[cityIndex]; 
 
     if (rawData[cityName]) {
+      // Use index 0 of the array for that specific city
       data = rawData[cityName][0]; 
       
       if (!data.current && data.currentConditions) {
@@ -41,56 +52,50 @@ async function fetchData() {
       }
 
       if (data.current) {
-        // --- THE "ULTIMATE" UNDEFINED FIX ---
-        
-        // 1. Numbers (Round them to remove the .4)
+        // 1. Numbers (Rounding)
         const speed = Math.round(data.current.windspeed || 0);
         const gust = Math.round(data.current.windgust || 0);
         const temp = Math.round(data.current.temp || 0);
         const feels = Math.round(data.current.feelslike || temp);
 
-        // 2. Map every possible name the emulator might look for
+        // 2. Mapping
         data.current.windSpeed = speed;
         data.current.wind_speed = speed;
         data.current.windspeed = speed;
-        
         data.current.windGust = gust;
         data.current.wind_gust = gust;
-        
         data.current.feelsLike = feels;
         data.current.feels_like = feels;
         data.current.apparentTemp = feels;
 
-        // 3. Direction Fix (Converts 310 to "NW")
+        // 3. Direction
         const dirText = getWindDirection(data.current.winddir || 0);
         data.current.windDir = dirText;
         data.current.wind_dir = dirText;
         data.current.windDirection = dirText;
 
-        // 4. Unit Fix (This kills the "undefined" text)
+        // 4. Units
         data.current.windUnits = "MPH";
-        data.current.wind_units = "MPH";
-        data.current.speedUnit = "MPH";
         data.current.tempUnits = "F";
-        data.current.temperatureUnits = "F";
-        data.current.unit = "MPH"; // Final fallback
+        data.current.unit = "MPH"; 
       }
-
-    } else {
-      data = rawData; 
     }
 
     if (rawLdlData[cityName]) {
       ldlData = rawLdlData[cityName][0];
-    } else {
-      ldlData = rawLdlData;
     }
 
-    console.log(`[dataLoader.js] Data Mapped:`, data);
+    console.log(`[dataLoader.js] Switched to ${cityName}:`, data);
+
+    // MOVE TO NEXT CITY FOR THE NEXT REFRESH
+    cityIndex = (cityIndex + 1) % cities.length;
+
   } catch (error) {
     console.error(`[dataLoader.js] Error:`, error.message);
   }
 }
+
+// ... (Rest of the helper functions: fetchLocationsList, fetchBackgroundsIndex)
 
 async function fetchLocationsList() {
   locationsList = null;
@@ -117,5 +122,7 @@ async function runInitialProcesses() {
   }
 }
 
-setInterval(fetchData, 1500000);
+// Set this interval shorter (e.g., 10000 for 10 seconds) if you want 
+// the cities to rotate faster on your screen!
+setInterval(fetchData, 1500000); 
 runInitialProcesses();
