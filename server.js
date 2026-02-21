@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const app = express();
 
 const serverConfig = {
-  "vcApiKey": "RYYTE6F6X4QZ4UYTKGF99V4Q5",
+  "vcApiKey": "HNEH9P7SSFRJG4XXG3FTM3WQE",
   "units": "us", 
   "webPort": 9001,
   "locationIndex": {
