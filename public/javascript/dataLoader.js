@@ -11,9 +11,6 @@ import { config } from "./config.js";
 // --- LOCATION ROTATION SETUP ---
 const cities = [
   "Manassas, VA",
-  "Manassas Park, VA",
-  "Buckhall, VA",
-  "Fairfax, VA"
 ];
 let cityIndex = 0;
 
