@@ -5,7 +5,7 @@ const app = express();
 
 const serverConfig = {
   "vcApiKey": "const serverConfig = {
-  "vcApiKey": "FRD55RSCBF",
+  "vcApiKey": "HNEH9P7SSFRJG4XXG3FTM3WQE",
   "units": "us", 
   "webPort": 9001,
   "locationIndex": {
