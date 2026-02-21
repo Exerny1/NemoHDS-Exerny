@@ -4,7 +4,16 @@ const fs = require('fs').promises;
 const app = express();
 
 const serverConfig = {
-  "vcApiKey": "HNEH9P7SSFRJG4XXG3FTM3WQE",
+  "vcApiKey": "const serverConfig = {
+  "vcApiKey": "FRD55RSCBF",
+  "units": "us", 
+  "webPort": 9001,
+  "locationIndex": {
+    "locations": ["Manassas, VA"],
+    "ldlLocations": ["Manassas, VA"]
+  }
+};
+
   "units": "us", 
   "webPort": 9001,
   "locationIndex": {
